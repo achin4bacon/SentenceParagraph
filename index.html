@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OOP</title>
+</head>
+<body>
+
+     <h1>Introduction to Object Oriented Programming!</h1>
+     <small>Instructions are  in the code! How exciting!</small>
+    <div id="paragraphs"></div>
+	<script>
+	/*jshint esversion:6*/
+
+            // Finish the Following constructor
+
+		function Sentence(arr) {
+			this.wordsArray = arr;
+
+			this.getWordCount = function() {
+				// Find the amount of words in the sentence
+				// Completed for you, as an example.
+				return this.wordsArray.length;
+			}
+
+			this.getLetterCount = function() {
+				// Find the amount of letters in the sentence
+				var joinedArr = arr.join(" ");
+				return joinedArr.length;
+			}
+			
+
+			this.reverse = function() {
+				// Reverse the sentence, in place
+				var newArr = [];
+				for (var i = this.wordsArray.length -1; i >= 0; i--){
+					newArr.push(this.wordsArray[i]);
+				}
+				this.wordsArray = newArr; 				
+			}
+			this.getWordAt = function(i) {
+				// Return the word at index i
+				return this.wordsArray[i]
+			}
+			this.makeSentence = function(){
+				var sentence = this.wordsArray.join(" ");
+				return sentence;
+			};
+		}
+
+		/* Some Tests. Make them all pass! */
+
+		var s = new Sentence(["Hello", "I", "Am", "Computer"]);
+		console.log(s.getWordCount() === 4);
+		console.log(s.getLetterCount() === 19); //remember spaces!
+		console.log(s.getWordAt(0) === "Hello");
+		s.reverse();
+		console.log(s.getWordAt(0) === "Computer");
+		s.reverse(); 
+		console.log(s.makeSentence());
+		/*
+
+		Create a new constructor function for a Paragraph
+
+		You should be able to
+			var s2 = new Sentence (["I", "am", "not", "a", "human"]);
+			var p = new Paragraph([s, s2]);
+
+		Implement the following, including writing tests for them:
+			p.getWordCount();
+			p.getLetterCount();
+			p.getWordAt(i); // where i is some integer
+			p.getSentenceCount();
+			p.addToHTML(document.getElementById("paragraphs"));
+
+	*/
+
+	var s2 = new Sentence (["I", "am", "not", "a", "human"]); 
+	var p = new Paragraph ([s, s2]);
+	console.log(p)
+
+	function Paragraph(arrOfSentences){
+		this.sentences = arrOfSentences; 
+
+		this.getWordCount = function(){
+			var sum = 0; 
+			for (var i =0; i < this.sentences.length; i++){
+				sum += this.sentences[i].getWordCount(); 
+			}
+			return sum; 
+		}
+	
+		this.getLetterCount = function() {
+			var sum = 0; 
+			for (var s of arrOfSentences) {
+				sum += s.getLetterCount(); 
+			}
+			return sum;
+		}
+
+		this.getSentenceCount = function() {
+			return this.sentences.length; 
+		}
+
+		this.makeParagraph = function(){
+			var paragraph = "";
+			for (var s of arrOfSentences){
+				paragraph += s.makeSentence() + '. ';
+			}
+			return paragraph;
+		}
+
+		this.getWordAt = function(i) {
+			var s = 0; 
+			while (s < arrOfSentences.length){
+				if (i < arrOfSentences[s].getWordCount()) {
+					return arrOfSentences[s].getWordAt(i);
+				} else {
+					i -= arrOfSentences[s].getWordCount();
+					s++;
+				}
+			}
+			return null;
+		}
+	
+	}
+
+			console.log(p.getWordCount()); //-> 9
+			console.log(p.getLetterCount()); // ->35
+			console.log(p.getWordAt(7)); // --> 'a'
+			console.log(p.getSentenceCount()); //--> 2
+			console.log(p.makeParagraph());
+			// p.addToHTML(document.getElementById("paragraphs"));
+
+	// 	this.getWordAt(i) = function () {
+
+	// 	}
+
+	// 	this.addToHTML = function () {
+
+	// 	}
+	// }
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
